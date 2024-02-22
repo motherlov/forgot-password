@@ -1,0 +1,31 @@
+import React, { useState } from 'react';
+
+function EmailVerification() {
+  const [message, setMessage] = useState('');
+
+  const sendVerificationEmail = async () => {
+    try {
+      const response = await fetch('https://your-api-url/send-verification-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: 'user@example.com' }),
+      });
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      setMessage('Failed to send verification email');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Email Verification</h1>
+      <p>{message}</p>
+      <button onClick={sendVerificationEmail}>Send Verification Email</button>
+    </div>
+  );
+}
+
+export default EmailVerification;
